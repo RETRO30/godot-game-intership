@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://lx0jx8tl7sa0"]
+
+[ext_resource type="Script" uid="uid://da1348jhaeodg" path="res://scripts/main.gd" id="1_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://c80kns32hah4a" path="res://scenes/World.tscn" id="1_elqb8"]
+[ext_resource type="PackedScene" uid="uid://dhpguqq6ycys7" path="res://scenes/Player.tscn" id="2_rvslj"]
+[ext_resource type="PackedScene" uid="uid://b36dycb6s2sur" path="res://scenes/CoinManager.tscn" id="4_rarhs"]
+[ext_resource type="PackedScene" uid="uid://b6u7br34sdlsy" path="res://scenes/ScoreManager.tscn" id="5_c01mt"]
+[ext_resource type="PackedScene" uid="uid://c641jlws0jmes" path="res://scenes/PlayerHUD.tscn" id="6_nxtc6"]
+[ext_resource type="Script" uid="uid://cwbr0gd2ihauw" path="res://scripts/hud.gd" id="7_nxtc6"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0bbpv")
+
+[node name="Player" parent="." node_paths=PackedStringArray("world_node") instance=ExtResource("2_rvslj")]
+z_index = 10
+platform_on_leave = 2
+world_node = NodePath("../World")
+
+[node name="World" parent="." instance=ExtResource("1_elqb8")]
+scale = Vector2(1, 0.99553573)
+
+[node name="CoinManager" parent="." node_paths=PackedStringArray("world_node", "player_node", "score_manager_node") instance=ExtResource("4_rarhs")]
+z_index = 9
+world_node = NodePath("../World")
+player_node = NodePath("../Player")
+score_manager_node = NodePath("../ScoreManager")
+
+[node name="ScoreManager" parent="." instance=ExtResource("5_c01mt")]
+
+[node name="PlayerHUD" parent="." node_paths=PackedStringArray("score_manager_node", "player_node") instance=ExtResource("6_nxtc6")]
+script = ExtResource("7_nxtc6")
+score_manager_node = NodePath("../ScoreManager")
+player_node = NodePath("../Player")
