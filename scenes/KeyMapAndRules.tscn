@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://djcuiin70n755"]
+[gd_scene load_steps=2 format=3 uid="uid://djcuiin70n755"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_so1kl"]
+font_size = 24
+font_color = Color(0, 0.64482963, 0.25324965, 1)
 
 [node name="KeymapAndRules" type="Label"]
 offset_right = 40.0
@@ -6,6 +10,7 @@ offset_bottom = 23.0
 text = "Move - W/A/S/D or Up/Left/Down/Right Arrow
 Teleport through wall - Space + W/A/S/D or Up/Left/Down/Right Arrow
 
-Collect coins and don't get caught by demons!"
+Collect all coins and don't get caught by demons!"
+label_settings = SubResource("LabelSettings_so1kl")
 horizontal_alignment = 1
 vertical_alignment = 1

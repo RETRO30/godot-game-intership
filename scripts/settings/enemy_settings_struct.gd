@@ -1,8 +1,8 @@
 extends Resource
 class_name EnemySettingsStruct
 
-@export var enemy_speed: float = 500
-@export var enemy_count: int = 5
+@export var enemy_speed: float = 250.0
+@export var enemy_count: int = 10
 
 func validate() -> bool:
 	var ok = true

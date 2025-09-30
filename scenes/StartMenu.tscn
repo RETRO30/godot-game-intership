@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3 uid="uid://bf700npl2s0bi"]
+
+[ext_resource type="Texture2D" uid="uid://dt27ildtychwf" path="res://art/backgrounds/background.png" id="1_fb70i"]
+[ext_resource type="Script" uid="uid://nxw4d8rxnwxn" path="res://scripts/start_menu.gd" id="1_kmax6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kmax6"]
+font_size = 64
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cp7se"]
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+
+[node name="Menu" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kmax6")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_fb70i")
+expand_mode = 3
+
+[node name="List" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -46.5
+offset_right = 75.0
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGame" type="Button" parent="List"]
+layout_mode = 2
+text = "New game
+"
+
+[node name="LoadSave" type="Button" parent="List"]
+layout_mode = 2
+text = "Load save
+"
+
+[node name="Exit" type="Button" parent="List"]
+layout_mode = 2
+text = "Exit"
+
+[node name="TopText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 164.0
+grow_horizontal = 2
+text = "Game!"
+label_settings = SubResource("LabelSettings_kmax6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeymapAndRules" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -145.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Move - W/A/S/D or Up/Left/Down/Right Arrow
+Teleport through wall - Space + W/A/S/D or Up/Left/Down/Right Arrow
+
+Collect all coins and don't get caught by demons!"
+label_settings = SubResource("LabelSettings_cp7se")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="List/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="List/Exit" to="." method="_on_exit_pressed"]

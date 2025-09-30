@@ -7,6 +7,8 @@
 size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 2
 wall_min_slide_angle = 0.0
 script = ExtResource("1_v6fml")
 

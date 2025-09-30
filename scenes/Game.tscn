@@ -1,0 +1,24 @@
+[gd_scene load_steps=11 format=3 uid="uid://lx0jx8tl7sa0"]
+
+[ext_resource type="Script" uid="uid://da1348jhaeodg" path="res://scripts/game.gd" id="1_400sg"]
+[ext_resource type="PackedScene" uid="uid://c80kns32hah4a" path="res://scenes/World.tscn" id="2_g4kob"]
+[ext_resource type="PackedScene" uid="uid://dhpguqq6ycys7" path="res://scenes/Player.tscn" id="3_qy1jj"]
+[ext_resource type="PackedScene" uid="uid://bdp8ltdjvddrb" path="res://scenes/Coin.tscn" id="4_3xj3m"]
+[ext_resource type="PackedScene" uid="uid://c641jlws0jmes" path="res://scenes/PlayerHUD.tscn" id="5_mcffj"]
+[ext_resource type="PackedScene" uid="uid://b36dycb6s2sur" path="res://scenes/CoinManager.tscn" id="6_2rd6h"]
+[ext_resource type="PackedScene" uid="uid://dhdgvmgc8r81i" path="res://scenes/Enemy.tscn" id="7_7ua8r"]
+[ext_resource type="PackedScene" uid="uid://3tufjjw7tedg" path="res://scenes/EnemyManager.tscn" id="8_r7sob"]
+[ext_resource type="PackedScene" uid="uid://bq5lef3drqwx2" path="res://scenes/PauseMenu.tscn" id="9_g4kob"]
+[ext_resource type="PackedScene" uid="uid://dja6qg1u8x2l4" path="res://scenes/PauseManager.tscn" id="10_qy1jj"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_400sg")
+world_scene = ExtResource("2_g4kob")
+player_scene = ExtResource("3_qy1jj")
+player_hud_scene = ExtResource("5_mcffj")
+coin_scene = ExtResource("4_3xj3m")
+coin_manager_scene = ExtResource("6_2rd6h")
+enemy_scene = ExtResource("7_7ua8r")
+enemy_manager_scene = ExtResource("8_r7sob")
+pause_menu_scene = ExtResource("9_g4kob")
+pause_manager_scene = ExtResource("10_qy1jj")

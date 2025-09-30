@@ -2,7 +2,7 @@ extends Resource
 
 class_name PlayerSettingsStruct
 
-@export var player_speed: float = 400
+@export var player_speed: float = 200
 @export var teleport_cooldown: float = 1.5
 @export var teleport_distance: int = 10 # in tiles
 
