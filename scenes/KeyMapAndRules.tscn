@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://djcuiin70n755"]
+
+[node name="KeymapAndRules" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Move - W/A/S/D or Up/Left/Down/Right Arrow
+Teleport through wall - Space + W/A/S/D or Up/Left/Down/Right Arrow
+
+Collect coins and don't get caught by demons!"
+horizontal_alignment = 1
+vertical_alignment = 1

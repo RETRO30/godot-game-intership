@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c80kns32hah4a"]
 
-[ext_resource type="Script" uid="uid://dvnf14v2pvufq" path="res://scripts/world.gd" id="1_32lhk"]
+[ext_resource type="Script" uid="uid://dvnf14v2pvufq" path="res://scripts/world/world.gd" id="1_32lhk"]
 [ext_resource type="TileSet" uid="uid://bex21kewcbdan" path="res://tilesets/tileset.tres" id="2_32lhk"]
 
 [node name="World" type="Node2D"]

@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameManager="*res://autoload/game_manager.gd"
 Settings="*res://autoload/settings.gd"
 Save="*res://autoload/save.gd"
+Log="*res://autoload/log.gd"
 
 [input]
 

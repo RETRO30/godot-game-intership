@@ -1,12 +1,12 @@
 extends Node2D
 
 # map settings
-@export var width: int = 64
-@export var height: int = 64
+var width: int = Settings.data.world_settings.world_size.x
+var height: int = Settings.data.world_settings.world_size.y
 
 # generation settings
-@export var wall_threshold: float = 0.56
-@export var frequency: float = 0.08
+var wall_threshold: float = 0.56
+var frequency: float = 0.08
 
 var generation_seed: int = randi()
 var noise := FastNoiseLite.new()
@@ -31,15 +31,15 @@ func _generate_map() -> void:
 		for x in range(width):
 			var v := noise.get_noise_2d(float(x), float(y))
 			var nv := (v + 1.0) * 0.5
-
-			if x == 0 or y == 0 or x == width - 1 or y == height - 1:
+			
+			if x == 0 or y == 0 or x == width - 1 or y == height - 1: # world edges
 				wall_layer.set_cell(Vector2i(x, y), source_id, Vector2i(1, 0))
-			elif nv > wall_threshold:
+			elif nv > wall_threshold: # walls
 				wall_layer.set_cell(Vector2i(x, y), source_id, Vector2i(1, 0))
-			else:
+			else: # ground
 				ground_layer.set_cell(Vector2i(x, y), source_id, Vector2i(0, 0))
-		
-		
+
+
 func get_random_ground_position() -> Vector2:
 	var ground_cells = ground_layer.get_used_cells()
 	var candidates: Array[Vector2i] = []
@@ -53,22 +53,25 @@ func get_random_ground_position() -> Vector2:
 	var chosen = candidates.pick_random()
 	var tile_size = ground_layer.tile_set.tile_size
 	return chosen * tile_size + tile_size/2
-	
 
 
-func _highlight_cell(cell: Vector2i, duration: float = 0.2) -> void:
+func _highlight_cell(
+	cell: Vector2i, 
+	duration: float = 0.2, 
+	color: Color = Color(0.0, 0.6, 1.0, 0.502)
+) -> void:
 	var tile_size = ground_layer.tile_set.tile_size
 	var highlight = ColorRect.new()
-	highlight.color = Color(0.0, 0.6, 1.0, 0.502)
+	highlight.color = color
 	highlight.size = tile_size
 	highlight.position = cell * tile_size
 	highlight_layer.add_child(highlight)
 
-	# Через duration удаляем подсветку
 	await get_tree().create_timer(duration).timeout
 	if is_instance_valid(highlight):
 		highlight.queue_free()
-	
+
+
 func get_nearest_free_cell(
 	start_pos: Vector2,
 	direction: Vector2, 
