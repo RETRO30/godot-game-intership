@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://c641jlws0jmes"]
+
+[ext_resource type="Script" uid="uid://cwbr0gd2ihauw" path="res://scripts/world/hud.gd" id="1_0kcyj"]
+[ext_resource type="PackedScene" uid="uid://bq5lef3drqwx2" path="res://scenes/HUD/PauseMenu.tscn" id="2_fjqji"]
+[ext_resource type="PackedScene" uid="uid://b2hl1u08b5c0m" path="res://scenes/HUD/FinalMenu.tscn" id="3_fnqv5"]
+
+[node name="PlayerHUD" type="CanvasLayer"]
+script = ExtResource("1_0kcyj")
+
+[node name="GameHud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StaminaProgressBar" type="ProgressBar" parent="GameHud"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
+
+[node name="ScoreLabel" type="Label" parent="GameHud"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 39.0
+grow_horizontal = 2
+theme_type_variation = &"HeaderLarge"
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_fjqji")]
+process_mode = 2
+visible = false
+
+[node name="FinalMenu" parent="." instance=ExtResource("3_fnqv5")]
+process_mode = 2
+visible = false
+
+[connection signal="continue_button_pressed" from="PauseMenu" to="." method="_on_pause_menu_continue_button_pressed"]
+[connection signal="save_button_pressed" from="PauseMenu" to="." method="_on_pause_menu_save_button_pressed"]

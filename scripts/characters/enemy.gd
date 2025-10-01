@@ -1,8 +1,7 @@
 extends CharacterBody2D
 
 @onready var agent: NavigationAgent2D = $NavigationAgent2D
-@export var world_node: Node2D
-@export var player_node: Node2D
+var world_node: Node2D
 
 var speed := Settings.data.enemy_settings.enemy_speed
 
@@ -17,3 +16,4 @@ func _physics_process(_delta) -> void:
 		var direction = (next_pos - position).normalized()
 		velocity = direction * speed
 		move_and_slide()
+		

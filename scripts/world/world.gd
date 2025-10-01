@@ -1,4 +1,5 @@
 extends Node2D
+class_name World
 
 # map settings
 var width: int = Settings.data.world_settings.world_size.x
@@ -16,8 +17,26 @@ var noise := FastNoiseLite.new()
 @onready var highlight_layer: Node2D = $HighlightLayer
 
 func _ready() -> void:
-	_generate_map()
+	pass
 	
+func setup(new: bool, saved_data: Dictionary):
+	if new == false:
+		width = saved_data["width"]
+		height = saved_data["height"]
+		wall_threshold = saved_data["wall_threshold"]
+		frequency = saved_data["frequency"]
+		generation_seed = saved_data["generation_seed"]
+	_generate_map()
+		
+func genarate_save_data() -> Dictionary:
+	return {
+		"width": width,
+		"height": height,
+		"wall_threshold": wall_threshold,
+		"frequency": frequency,
+		"generation_seed": generation_seed
+	}
+
 
 func _generate_map() -> void:
 	ground_layer.clear()

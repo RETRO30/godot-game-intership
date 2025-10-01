@@ -18,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.41960785)
+color = Color(0, 0, 0, 0.84313726)
 
 [node name="List" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -53,4 +53,5 @@ layout_mode = 2
 text = "Main menu"
 
 [connection signal="pressed" from="List/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="List/LoadSave" to="." method="_on_load_save_pressed"]
 [connection signal="pressed" from="List/MainMenu" to="." method="_on_main_menu_pressed"]

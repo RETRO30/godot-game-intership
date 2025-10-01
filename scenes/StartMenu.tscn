@@ -89,4 +89,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="List/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="List/LoadSave" to="." method="_on_load_save_pressed"]
 [connection signal="pressed" from="List/Exit" to="." method="_on_exit_pressed"]
+[connection signal="focus_entered" from="TopText" to="Background" method="_on_top_text_focus_entered"]

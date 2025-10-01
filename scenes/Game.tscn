@@ -1,24 +1,45 @@
 [gd_scene load_steps=11 format=3 uid="uid://lx0jx8tl7sa0"]
 
 [ext_resource type="Script" uid="uid://da1348jhaeodg" path="res://scripts/game.gd" id="1_400sg"]
-[ext_resource type="PackedScene" uid="uid://c80kns32hah4a" path="res://scenes/World.tscn" id="2_g4kob"]
-[ext_resource type="PackedScene" uid="uid://dhpguqq6ycys7" path="res://scenes/Player.tscn" id="3_qy1jj"]
-[ext_resource type="PackedScene" uid="uid://bdp8ltdjvddrb" path="res://scenes/Coin.tscn" id="4_3xj3m"]
-[ext_resource type="PackedScene" uid="uid://c641jlws0jmes" path="res://scenes/PlayerHUD.tscn" id="5_mcffj"]
-[ext_resource type="PackedScene" uid="uid://b36dycb6s2sur" path="res://scenes/CoinManager.tscn" id="6_2rd6h"]
-[ext_resource type="PackedScene" uid="uid://dhdgvmgc8r81i" path="res://scenes/Enemy.tscn" id="7_7ua8r"]
-[ext_resource type="PackedScene" uid="uid://3tufjjw7tedg" path="res://scenes/EnemyManager.tscn" id="8_r7sob"]
-[ext_resource type="PackedScene" uid="uid://bq5lef3drqwx2" path="res://scenes/PauseMenu.tscn" id="9_g4kob"]
-[ext_resource type="PackedScene" uid="uid://dja6qg1u8x2l4" path="res://scenes/PauseManager.tscn" id="10_qy1jj"]
+[ext_resource type="PackedScene" uid="uid://c80kns32hah4a" path="res://scenes/world/World.tscn" id="2_g4kob"]
+[ext_resource type="PackedScene" uid="uid://bqyo1q74r6o1j" path="res://scenes/HUD/FinalManager.tscn" id="3_3xj3m"]
+[ext_resource type="PackedScene" uid="uid://dhpguqq6ycys7" path="res://scenes/characters/Player.tscn" id="3_qy1jj"]
+[ext_resource type="PackedScene" uid="uid://bdp8ltdjvddrb" path="res://scenes/objects/Coin.tscn" id="4_3xj3m"]
+[ext_resource type="PackedScene" uid="uid://c641jlws0jmes" path="res://scenes/HUD/PlayerHUD.tscn" id="5_mcffj"]
+[ext_resource type="PackedScene" uid="uid://b36dycb6s2sur" path="res://scenes/objects/CoinManager.tscn" id="6_2rd6h"]
+[ext_resource type="PackedScene" uid="uid://dhdgvmgc8r81i" path="res://scenes/characters/Enemy.tscn" id="7_7ua8r"]
+[ext_resource type="PackedScene" uid="uid://3tufjjw7tedg" path="res://scenes/characters/EnemyManager.tscn" id="8_r7sob"]
+[ext_resource type="PackedScene" uid="uid://dja6qg1u8x2l4" path="res://scenes/HUD/PauseManager.tscn" id="10_qy1jj"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_400sg")
-world_scene = ExtResource("2_g4kob")
-player_scene = ExtResource("3_qy1jj")
-player_hud_scene = ExtResource("5_mcffj")
+
+[node name="PauseManager" parent="." instance=ExtResource("10_qy1jj")]
+process_mode = 3
+
+[node name="FinalManager" parent="." instance=ExtResource("3_3xj3m")]
+process_mode = 3
+
+[node name="World" parent="." instance=ExtResource("2_g4kob")]
+
+[node name="CoinManager" parent="." node_paths=PackedStringArray("world_node", "player_node") instance=ExtResource("6_2rd6h")]
+world_node = NodePath("../World")
 coin_scene = ExtResource("4_3xj3m")
-coin_manager_scene = ExtResource("6_2rd6h")
+player_node = NodePath("../Player")
+
+[node name="EnemyManager" parent="." node_paths=PackedStringArray("world_node") instance=ExtResource("8_r7sob")]
+position = Vector2(0, 6)
+world_node = NodePath("../World")
 enemy_scene = ExtResource("7_7ua8r")
-enemy_manager_scene = ExtResource("8_r7sob")
-pause_menu_scene = ExtResource("9_g4kob")
-pause_manager_scene = ExtResource("10_qy1jj")
+
+[node name="Player" parent="." node_paths=PackedStringArray("world_node") instance=ExtResource("3_qy1jj")]
+world_node = NodePath("../World")
+enemy_scene = ExtResource("7_7ua8r")
+
+[node name="PlayerHUD" parent="." instance=ExtResource("5_mcffj")]
+
+[connection signal="pause_menu_visible_switched" from="PauseManager" to="PlayerHUD" method="_on_pause_manager_pause_menu_visible_switched"]
+[connection signal="show_end_game" from="FinalManager" to="PlayerHUD" method="_on_final_manager_show_end_game"]
+[connection signal="game_over" from="Player" to="FinalManager" method="_on_player_game_over"]
+[connection signal="game_saved" from="PlayerHUD" to="." method="_on_player_hud_game_saved"]
+[connection signal="pause_menu_continue_button_pressed" from="PlayerHUD" to="PauseManager" method="_on_player_hud_pause_menu_continue_button_pressed"]

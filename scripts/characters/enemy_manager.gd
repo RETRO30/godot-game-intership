@@ -3,52 +3,73 @@ class_name EnemyManager
 
 @export var world_node: Node2D
 @export var enemy_scene: PackedScene
-@export var player_node: Node2D
 
-var coins: Array = []
+var enemies: Array = []
+var enemy_speed: float = Settings.data.enemy_settings.enemy_speed
 
 func _ready() -> void:
-	_spawn_coins()
+	pass
+	
+func setup(new: bool, saved_data: Dictionary):
+	if new:
+		_spawn_enemies([])
+	else:
+		enemy_speed = saved_data["speed"]
+		_spawn_enemies(saved_data["enemies"])
 
-func _spawn_coins() -> void:
+func genarate_save_data() -> Dictionary:
+	var enemies_positions: Array = []
+	for inst in enemies:
+		enemies_positions.append(
+			{
+				"x": inst.position.x, 
+				"y": inst.position.y
+			}
+		)
+	return {
+		"speed": Settings.data.enemy_settings.enemy_speed,
+		"count": Settings.data.enemy_settings.enemy_count,
+		"enemies": enemies_positions
+	}
+
+func _spawn_enemies(saved_enemies: Array) -> void:
 	if world_node == null or enemy_scene == null:
-		Log.log_error("CoinManager: world_node or enemy_scene not assigned")
+		Log.log_error("enemyManager: world_node or enemy_scene not assigned")
 		return
-	#_clear_coins()
-	for i in range(Settings.data.enemy_settings.enemy_count):
-		_spawn_coin()
+	_clear_enemies()
+	if saved_enemies and len(saved_enemies) > 0:
+		for enemy_position in saved_enemies:
+			_spawn_enemy(enemy_position)
+	else:
+		for i in range(GameManager.count_coins):
+			_spawn_enemy({})
 
-func _spawn_coin() -> void:
-	var coin_positions: Array = []
-	for inst in coins:
-		coin_positions.append(inst.position)
-	if world_node == null or enemy_scene == null:
-		Log.log_error("CoinManager: world_node or enemy_scene not assigned")
-		return
-	
-	var coin_instance: Node2D = enemy_scene.instantiate()
-	var new_position = world_node.get_random_ground_position()
-	while new_position in coin_positions:
-		new_position = world_node.get_random_ground_position()
-	coin_instance.world_node = world_node
-	coin_instance.position = new_position
-	
-	#coin_instance.collected.connect(_on_coin_collected)
-	
-	coin_instance.player_node = player_node
-	
-	add_child(coin_instance)
+func _spawn_enemy(enemy_position: Dictionary) -> void:
+	var enemy_instance: CharacterBody2D = enemy_scene.instantiate()
+	enemy_instance.world_node = world_node
+	enemy_instance.speed = enemy_speed
+	if enemy_position and enemy_position != {}:
+		enemy_instance.position = Vector2(enemy_position["x"], enemy_position["y"])
+	else:	
+		var enemy_positions: Array = []
+		for inst in enemies:
+			enemy_positions.append(inst.position)
+		if world_node == null or enemy_scene == null:
+			Log.log_error("EnemyManager: world_node or enemy_scene not assigned")
+			return
+		var new_position = world_node.get_random_ground_position()
+		while new_position in enemy_positions:
+			new_position = world_node.get_random_ground_position()
+		
+		enemy_instance.position = new_position
 
+	add_child(enemy_instance)
+	
+	enemies.append(enemy_instance)
 	
 	
-	coins.append(coin_instance)
-
-#func _on_coin_collected() -> void:
-	#Log.log_info("Coin collected!")
-	#GameManager.increase_player_score()
-#
-#func _clear_coins() -> void:
-	#for coin in coins:
-		#if is_instance_valid(coin):
-			#coin.queue_free()
-	#coins.clear()
+func _clear_enemies() -> void:
+	for enemy in enemies:
+		if is_instance_valid(enemy):
+			enemy.queue_free()
+	enemies.clear()
