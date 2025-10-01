@@ -1,7 +1,12 @@
 extends Node
 
-const SAVE_PATH := "res://data/savegame.json"
+var exe_path = OS.get_executable_path()
+var exe_dir = exe_path.get_base_dir()
+var SAVE_PATH := exe_dir.path_join("/saves/savegame.json")
 var save_data: Dictionary
+
+func _ready() -> void:
+	Settings.ensure_dir(exe_dir.path_join("saves"))
 
 func save_game(data: Dictionary) -> void:
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
